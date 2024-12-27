@@ -25,7 +25,6 @@ const Chat = ({ chatId, userId }) => {
   const handleSend = () => {
     if (newMessage.trim()) {
       sendMessage(chatId, newMessage, userId);
-      console.log(messages);
       setNewMessage("");
     }
   };
