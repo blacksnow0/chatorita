@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useLogin();
   const [formData, setFormData] = useState({
     username: "",
@@ -24,6 +26,7 @@ const Login = () => {
     try {
       await login(formData);
       alert("Login success");
+      navigate("/chat");
     } catch (err) {
       setError("Invalid username or password!");
     } finally {
@@ -70,7 +73,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2  bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none text-gray-700 ${
+            className={`w-full px-4 py-2  bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none  ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >

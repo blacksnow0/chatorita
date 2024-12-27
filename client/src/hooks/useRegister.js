@@ -6,12 +6,14 @@ export const useRegister = () => {
   const { dispatch } = useAuthContext();
   const register = async (formData) => {
     try {
+      console.log("this worked");
       const res = await axios.post(
         "http://localhost:5003/api/register",
         formData
       );
       if (res.status === 200) {
         const { username, token } = res.data;
+        console.log(username, token);
         localStorage.setItem("user", JSON.stringify({ username, token }));
         dispatch({ type: "LOGIN", payload: { username, token } });
       }

@@ -8,13 +8,13 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA3iBDPr1_N1D9Anb5yFp81I_6cmodPPLw",
-  authDomain: "chat-burnmetric.firebaseapp.com",
-  projectId: "chat-burnmetric",
-  storageBucket: "chat-burnmetric.firebasestorage.app",
-  messagingSenderId: "981703826166",
-  appId: "1:981703826166:web:a3e0b38845949ede0b2ad7",
-  measurementId: "G-RXB3WTDKJY",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
