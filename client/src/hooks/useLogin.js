@@ -7,7 +7,10 @@ export const useLogin = () => {
 
   const login = async (formData) => {
     try {
-      const res = await axios.post("http://localhost:5003/api/login", formData);
+      const res = await axios.post(
+        "https://chatorita.onrender.com/api/login",
+        formData
+      );
       if (res.status === 200) {
         const { username, token } = res.data;
 

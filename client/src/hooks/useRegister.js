@@ -8,7 +8,7 @@ export const useRegister = () => {
     try {
       console.log("this worked");
       const res = await axios.post(
-        "http://localhost:5003/api/register",
+        "https://chatorita.onrender.com/api/register",
         formData
       );
       if (res.status === 200) {
