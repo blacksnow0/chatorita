@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRegister } from "../hooks/useRegister";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { register } = useRegister();
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,9 +29,12 @@ function Register() {
     ) {
       return setError("Please fill all the fields");
     }
+    setLoading(true);
     try {
       await register(formData);
       alert("Register success");
+      navigate("/");
+
       setError("");
       setLoading(false);
 
