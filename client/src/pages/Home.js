@@ -8,11 +8,14 @@ function Home() {
         <p className="text-xl font-semibold">Welcome to the home page</p>
       </div>
       <div>
-        <button className="p-4 mx-3 border bg-blue-500 text-white">
+        <button className="p-4 border bg-blue-500 text-white">
           <a href="/chat">Chat</a>
         </button>
-        <button className="p-4 border bg-blue-500 text-white">
+        <button className="p-4 mx-3 border bg-blue-500 text-white">
           <a href="/register">Register</a>
+        </button>
+        <button className="p-4 border bg-blue-500 text-white">
+          <a href="/login">Login</a>
         </button>
       </div>
     </div>
