@@ -2,6 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { sendMessage, listenForMessages } from "../firebase/firebaseHelpers";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRightLong,
+  faPaperPlane,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Chat = ({ chatId, userId }) => {
   const [messages, setMessages] = useState([]);
@@ -40,14 +46,19 @@ const Chat = ({ chatId, userId }) => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)] mt-12">
+    <div className="flex flex-col h-[calc(90vh)]">
       {/* Header */}
       <header className="p-4 flex justify-between bg-indigo-600 shadow-lg">
         <h3 className="text-white font-bold text-xl">Chat Room</h3>
         {user && (
           <p className="text-white text-lg font-semibold">@{user.username}</p>
         )}
-        <button onClick={handleClose}>close</button>
+        <button onClick={handleClose}>
+          <FontAwesomeIcon
+            icon={faTimesCircle}
+            className="text-white text-2xl"
+          />
+        </button>
       </header>
 
       {/* Chat Messages */}
@@ -101,7 +112,10 @@ const Chat = ({ chatId, userId }) => {
           className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
           aria-label="Send message"
         >
-          Send
+          <FontAwesomeIcon
+            icon={faPaperPlane}
+            className="text-2xl text-white"
+          />
         </button>
       </footer>
     </div>

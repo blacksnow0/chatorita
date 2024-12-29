@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50  ">
+    <nav>
       <div className="container mx-auto px-6 md:px-10">
         {/* Navbar Header */}
         <div className="flex justify-between items-center h-16">
