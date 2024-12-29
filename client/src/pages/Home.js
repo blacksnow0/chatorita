@@ -1,5 +1,4 @@
 import React from "react";
-import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import background from "../Assets/background.jpeg";
 import snoop from "../Assets/snoop.jpeg";
@@ -8,14 +7,8 @@ import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const { logout } = useLogout();
   const { user } = useAuthContext();
   const navigate = useNavigate();
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    logout();
-  };
 
   return (
     <div className="min-h-[calc(100vh-5rem)] flex flex-col md:flex-row gap-4 px-4 py-6">
@@ -25,6 +18,11 @@ function Home() {
         style={{ backgroundImage: `url(${background})` }}
       >
         <div className="flex flex-col justify-center items-center h-full bg-black bg-opacity-60 text-white p-6">
+          {user && (
+            <h1 className="text-3xl text-white  drop-shadow-lg mb-4 font-bold tracking-wider">
+              {user.username.toUpperCase()} 
+            </h1>
+          )}
           <h1 className="text-3xl md:text-4xl font-bold mb-4 tracking-wide drop-shadow-lg">
             Discover Connections
           </h1>
@@ -34,10 +32,10 @@ function Home() {
           </p>
           <div className="mt-6">
             <a
-              href="/about"
-              className="inline-block px-6 py-3 bg-indigo-500 text-white font-semibold rounded-full shadow-md hover:bg-indigo-600 transition-all"
+              href="/chat"
+              className="drop-shadow-xl inline-block px-6 py-3 bg-indigo-500 text-white font-semibold rounded-full shadow-md hover:bg-indigo-600 transition-all"
             >
-              Learn More
+              Start Chatorita
             </a>
           </div>
         </div>
@@ -46,7 +44,7 @@ function Home() {
       {/* Right Section with Border and Content */}
       <div className="relative w-full md:w-1/2 bg-white border-2 border-gray-200 rounded-3xl shadow-lg flex items-center mb-10">
         {/* Small Container for 'Find Friends' */}
-        <div className="absolute top-10 left-10 bg-indigo-100 border border-indigo-300 rounded-lg shadow-md px-8 py-6 flex flex-col items-center gap-2">
+        <div className="absolute top-10 left-10 bg-indigo-100 border border-indigo-300 rounded-lg shadow-md px-8 py-6 flex flex-col items-center gap-2 hidden xl:flex">
           <button onClick={() => navigate("/login")}>
             <div className="flex items-center gap-2">
               <FontAwesomeIcon

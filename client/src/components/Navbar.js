@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import logo from "../Assets/logo.png";
 import { useLocation } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { logout } = useLogout();
 
-  const navItems = ["Home", "Chat", "About", "Profile", "Login", "Contact"];
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <nav className="sticky top-0 z-50  ">
@@ -66,8 +70,9 @@ const Navbar = () => {
           </button>
 
           {/* Desktop Navigation Right */}
+          {/* Desktop Navigation Right */}
           <div className="hidden md:flex space-x-6">
-            {["Profile", "Login", "Contact"].map((item) => (
+            {["Profile", "Contact"].map((item) => (
               <a
                 key={item}
                 href={`/${item.toLowerCase()}`}
@@ -80,6 +85,12 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
+            <button
+              onClick={handleLogout}
+              className="relative px-6 py-2 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out "
+            >
+              Logout
+            </button>
           </div>
         </div>
 
