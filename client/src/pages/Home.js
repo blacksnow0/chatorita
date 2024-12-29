@@ -1,60 +1,81 @@
 import React from "react";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import background from "../Assets/background.jpeg";
+import snoop from "../Assets/snoop.jpeg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleLogout = (e) => {
     e.preventDefault();
-    console.log("logout");
     logout();
   };
+
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center min-h-screen p-8">
-      {/* Left Section */}
-      <div className="text-center md:text-left mb-8 md:mb-0">
-        <h1 className="text-5xl font-extrabold text-indigo-600 tracking-widest mb-4">
-          Welcome Home
-        </h1>
-        <p className="text-lg mb-2">Your personal hub awaits.</p>
-        {user && (
-          <h2 className="text-2xl font-semibold tracking-wide">
-            Hello,{" "}
-            <span className="text-indigo-500">
-              {user.username.toUpperCase()}
-            </span>
-          </h2>
-        )}
+    <div className="min-h-[calc(100vh-5rem)] flex flex-col md:flex-row gap-4 px-4 py-6">
+      {/* Left Section with Background Image */}
+      <div
+        className="w-full md:w-1/2 bg-cover bg-center rounded-3xl shadow-lg relative overflow-hidden"
+        style={{ backgroundImage: `url(${background})` }}
+      >
+        <div className="flex flex-col justify-center items-center h-full bg-black bg-opacity-60 text-white p-6">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 tracking-wide drop-shadow-lg">
+            Discover Connections
+          </h1>
+          <p className="text-base md:text-lg text-gray-100 max-w-md text-center leading-relaxed">
+            Your personal hub for chatting, connecting, and staying in touch
+            with the world.
+          </p>
+          <div className="mt-6">
+            <a
+              href="/about"
+              className="inline-block px-6 py-3 bg-indigo-500 text-white font-semibold rounded-full shadow-md hover:bg-indigo-600 transition-all"
+            >
+              Learn More
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* Right Section */}
-      <div className="flex flex-wrap justify-center gap-4">
-        <a
-          href="/chat"
-          className="px-6 py-3 bg-indigo-500  font-semibold rounded-lg shadow hover:bg-indigo-600 transition"
-        >
-          Chat
-        </a>
-        <a
-          href="/register"
-          className="px-6 py-3 bg-green-600  font-semibold rounded-lg shadow hover:bg-green-700 transition"
-        >
-          Register
-        </a>
-        <a
-          href="/login"
-          className="px-6 py-3 bg-orange-500  font-semibold rounded-lg shadow hover:bg-orange-600 transition"
-        >
-          Login
-        </a>
-        <button
-          onClick={handleSubmit}
-          className="px-6 py-3 bg-red-500  font-semibold rounded-lg shadow hover:bg-red-600 transition"
-        >
-          Logout
-        </button>
+      {/* Right Section with Border and Content */}
+      <div className="relative w-full md:w-1/2 bg-white border-2 border-gray-200 rounded-3xl shadow-lg flex items-center mb-10">
+        {/* Small Container for 'Find Friends' */}
+        <div className="absolute top-10 left-10 bg-indigo-100 border border-indigo-300 rounded-lg shadow-md px-8 py-6 flex flex-col items-center gap-2">
+          <button onClick={() => navigate("/login")}>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon
+                icon={faArrowAltCircleRight}
+                className="text-3xl text-indigo-500"
+              />
+              <img
+                src={snoop}
+                alt="Snoop Dogg"
+                className="h-16 w-16 rounded-full object-cover"
+              />
+            </div>
+          </button>
+          <p className="text-indigo-600 font-semibold drop-shadow-lg">
+            CONNECT
+          </p>
+        </div>
+
+        {/* Main Content */}
+        <div className="p-6 md:p-8 text-center w-full">
+          <h1 className="text-3xl md:text-5xl font-bold text-indigo-600 mb-6 drop-shadow-lg tracking-widest">
+            Welcome To Chatorita
+          </h1>
+          <p className="text-sm md:text-lg text-gray-600 leading-relaxed">
+            Your ultimate platform to connect with friends and family. Stay
+            updated with your favorite communities and explore endless
+            possibilities in a single space.
+          </p>
+        </div>
       </div>
     </div>
   );

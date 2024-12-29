@@ -40,7 +40,7 @@ const Chat = ({ chatId, userId }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen ">
+    <div className="flex flex-col h-[calc(100vh-5rem)] mt-12">
       {/* Header */}
       <header className="p-4 flex justify-between bg-indigo-600 shadow-lg">
         <h3 className="text-white font-bold text-xl">Chat Room</h3>

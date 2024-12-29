@@ -14,19 +14,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Pop purple dark theme */
-  background: linear-gradient(
-      to bottom,
-      rgba(20, 20, 20, 0.9),
-      rgba(50, 0, 70, 0.8)
-    ),
-    url("./Assets/background.jpeg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-size: 400% 400%;
+  animation: gradient-move 10s infinite;
 
-  color: #f2f6fe; /* Light text for readability */
+  color: #f2f6fe;
+  @apply bg-gradient-to-r from-indigo-400 to-purple-400;
 }
 
 /* Custom styles for code */
@@ -40,19 +32,14 @@ code {
   box-sizing: border-box;
 }
 
-/* Navbar animation */
-
-@keyframes slideIn {
+@keyframes gradient-move {
   0% {
-    opacity: 0;
-    transform: translateY(-10px);
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
   100% {
-    opacity: 1;
-    transform: translateY(0);
+    background-position: 0% 50%;
   }
-}
-
-.animate-slideIn {
-  animation: slideIn 0.5s ease-in;
 }
