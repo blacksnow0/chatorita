@@ -29,18 +29,18 @@ function Register() {
     ) {
       return setError("Please fill all the fields");
     }
+    setError("");
     setLoading(true);
     try {
       await register(formData);
+
       alert("Register success");
       navigate("/");
-
-      setError("");
-      setLoading(false);
-
       setFormData({ username: "", email: "", password: "" });
     } catch (error) {
       setError("Failed to register");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,7 +49,9 @@ function Register() {
       <div className="w-full max-w-md p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center  ">REGISTER</h1>
         {error && (
-          <p className="mt-2 text-sm text-center text-red-500">{error}</p>
+          <p className="mt-2 text-lg text-center text-orange-800 tracking-wider">
+            {error}
+          </p>
         )}
         <form onSubmit={handleSubmit} className="mt-6">
           <div className="mb-4">
@@ -106,7 +108,7 @@ function Register() {
         </form>
         <p className="mt-4 text-sm text-center ">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <a href="/login" className="hover:underline">
             Login
           </a>
         </p>

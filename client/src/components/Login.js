@@ -39,7 +39,7 @@ const Login = () => {
       <div className="w-full max-w-md p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-center">Login</h1>
         {error && (
-          <p className="mt-2 text-sm text-center text-red-500">{error}</p>
+          <p className="mt-2 text-lg text-center text-orange-500">{error}</p>
         )}
         <form onSubmit={handleSubmit} className="mt-6">
           <div className="mb-4">
@@ -82,7 +82,7 @@ const Login = () => {
         </form>
         <p className="mt-4 text-sm text-center ">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <a href="/register" className="hover:underline">
             Register
           </a>
         </p>

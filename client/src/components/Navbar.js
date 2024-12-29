@@ -18,7 +18,7 @@ const Navbar = () => {
         {/* Navbar Header */}
         <div className="flex justify-between items-center h-16">
           {/* Desktop Navigation Left */}
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden lg:flex space-x-6">
             {["Home", "Chat", "About"].map((item) => (
               <a
                 key={item}
@@ -49,7 +49,7 @@ const Navbar = () => {
           {/* Hamburger Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-200 p-2 rounded-md md:hidden focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all"
+            className="text-gray-200 p-2 rounded-md lg:hidden focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all"
             aria-expanded={isOpen}
             aria-label="Toggle navigation"
           >
@@ -71,7 +71,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation Right */}
           {/* Desktop Navigation Right */}
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden lg:flex space-x-6">
             {["Profile", "Contact"].map((item) => (
               <a
                 key={item}
@@ -96,7 +96,7 @@ const Navbar = () => {
 
         {/* Mobile Dropdown */}
         {isOpen && (
-          <div className="md:hidden mt-4 bg-white bg-opacity-10 rounded-lg shadow-md">
+          <div className="lg:hidden mt-4 bg-white bg-opacity-10 rounded-lg shadow-md">
             <ul className="space-y-4 p-6 text-center">
               {["Home", "Chat", "Register", "Login"].map((item) => (
                 <li key={item}>
