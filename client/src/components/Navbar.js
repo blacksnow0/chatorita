@@ -23,7 +23,7 @@ const Navbar = () => {
               <a
                 key={item}
                 href={`/${item.toLowerCase()}`}
-                className={`relative px-6 py-2 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out ${
+                className={`relative px-4 tracking-wider drop-shadow-lg py-1 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out ${
                   location.pathname === `/${item.toLowerCase()}`
                     ? "after:content-['-'] after:text-white after:absolute after:left-2 after:top-1/2 after:-translate-y-1/2 after:text-2xl"
                     : ""
@@ -70,13 +70,12 @@ const Navbar = () => {
           </button>
 
           {/* Desktop Navigation Right */}
-          {/* Desktop Navigation Right */}
           <div className="hidden lg:flex space-x-6">
             {["Profile", "Contact"].map((item) => (
               <a
                 key={item}
                 href={`/${item.toLowerCase()}`}
-                className={`relative px-6 py-2 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out ${
+                className={`relative px-4 tracking-wider drop-shadow-lg py-1 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out  ${
                   location.pathname === `/${item.toLowerCase()}`
                     ? "after:content-['-'] after:text-white after:absolute after:left-2 after:top-1/2 after:-translate-y-1/2 after:text-2xl"
                     : ""
@@ -87,7 +86,7 @@ const Navbar = () => {
             ))}
             <button
               onClick={handleLogout}
-              className="relative px-6 py-2 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out "
+              className="relative px-4 tracking-wider drop-shadow-lg py-1 font-medium text-md border-2 rounded-3xl transition-all duration-300 ease-in-out "
             >
               Logout
             </button>

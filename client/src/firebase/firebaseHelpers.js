@@ -5,6 +5,8 @@ import {
   onSnapshot,
   query,
   orderBy,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -12,6 +14,7 @@ import { db } from "./firebase";
 export const sendMessage = async (chatId, message, senderId) => {
   try {
     const messagesRef = collection(db, "chats", chatId, "messages");
+    console.log(messagesRef);
     await addDoc(messagesRef, {
       text: message,
       senderId,
@@ -34,4 +37,16 @@ export const listenForMessages = (chatId, callback) => {
     }));
     callback(messages); // Pass messages to callback
   });
+};
+
+export const addReaction = async (chatId, messageId, senderId, reaction) => {
+  try {
+    const messageRef = doc(db, `chats/${chatId}/messages`, messageId);
+
+    await updateDoc(messageRef, {
+      [`reactions.${senderId}`]: reaction, // Update or add the user's reaction
+    });
+  } catch (error) {
+    console.error("Error adding reaction:", error);
+  }
 };

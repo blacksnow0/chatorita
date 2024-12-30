@@ -1,25 +1,50 @@
 import React, { useEffect, useState, useRef } from "react";
-import { sendMessage, listenForMessages } from "../firebase/firebaseHelpers";
+import {
+  sendMessage,
+  listenForMessages,
+  addReaction,
+} from "../firebase/firebaseHelpers";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRightLong,
   faPaperPlane,
   faTimesCircle,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import EmojiPicker from "emoji-picker-react";
+import { useSwipeable } from "react-swipeable";
 
 const Chat = ({ chatId, userId }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
   const { user } = useAuthContext();
   const messagesEndRef = useRef(null);
-
   const navigate = useNavigate();
 
+  const swipeHandlers = useSwipeable({
+    onSwiped: (eventData) => {
+      const { dir, event } = eventData;
+      if (dir === "Left" || dir === "Right") {
+        const messageId =
+          event.target.closest("[data-message-id]")?.dataset.messageId;
+        if (messageId) {
+          setSelectedMessageId(messageId);
+          setShowEmojiPicker(true);
+        }
+      }
+    },
+  });
+
   useEffect(() => {
-    const unsubscribe = listenForMessages(chatId, setMessages);
-    return () => unsubscribe();
+    try {
+      const unsubscribe = listenForMessages(chatId, setMessages);
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Error listening for messages", error);
+    }
   }, [chatId]);
 
   useEffect(() => {
@@ -30,8 +55,12 @@ const Chat = ({ chatId, userId }) => {
 
   const handleSend = () => {
     if (newMessage.trim()) {
-      sendMessage(chatId, newMessage, userId);
-      setNewMessage("");
+      try {
+        sendMessage(chatId, newMessage, userId);
+        setNewMessage("");
+      } catch (error) {
+        console.error("Failed to send message", error);
+      }
     }
   };
 
@@ -41,12 +70,31 @@ const Chat = ({ chatId, userId }) => {
     }
   };
 
-  const handleClose = (e) => {
+  const handleClose = () => {
     navigate("/");
   };
 
+  const handleReaction = (emoji) => {
+    if (selectedMessageId) {
+      addReaction(chatId, selectedMessageId, userId, emoji);
+      setShowEmojiPicker(false);
+      setSelectedMessageId(null);
+    }
+  };
+
+  const formatTimestamp = (timestamp) => {
+    if (timestamp && timestamp.toDate) {
+      return new Date(timestamp.toDate()).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+    }
+    return "Unknown Time";
+  };
+
   return (
-    <div className="flex flex-col h-[calc(90vh)]">
+    <div className="flex flex-col h-[calc(80vh)]" {...swipeHandlers}>
       {/* Header */}
       <header className="p-4 flex justify-between bg-indigo-600 shadow-lg">
         <h3 className="text-white font-bold text-xl">Chat Room</h3>
@@ -68,23 +116,28 @@ const Chat = ({ chatId, userId }) => {
             {messages.map((msg) => (
               <div
                 key={msg.id}
+                data-message-id={msg.id}
                 className={`max-w-xs px-4 py-3 rounded-lg shadow ${
                   msg.senderId === userId
                     ? "bg-indigo-500 text-white self-end"
                     : "bg-gray-300 text-gray-800 self-start"
                 }`}
               >
+                <span className="text-xs font-semibold">{msg.senderId}</span>
                 <p>{msg.text}</p>
-                <span className="text-xs font-semibold">{msg.senderId} </span>
-                <span className="text-xs ">
-                  {msg.timestamp && msg.timestamp.toDate
-                    ? new Date(msg.timestamp.toDate()).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })
-                    : "Unknown Time"}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs ">
+                    {formatTimestamp(msg.timestamp)}
+                  </span>
+                  {/* Display Reactions */}
+                  {(msg.reactions ? Object.entries(msg.reactions) : []).map(
+                    ([userId, emoji]) => (
+                      <span key={userId} className="reaction">
+                        {emoji}
+                      </span>
+                    )
+                  )}
+                </div>
               </div>
             ))}
             <div ref={messagesEndRef} />
@@ -96,8 +149,25 @@ const Chat = ({ chatId, userId }) => {
         )}
       </main>
 
+      {/* Emoji Picker */}
+      {showEmojiPicker && (
+        <div className="absolute bottom-20 left-0 right-0 flex justify-center">
+          <button
+            onClick={() => setShowEmojiPicker(false)}
+            className="z-50 absolute top-4 right-20 text-indigo-500 text-3xl"
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+          <EmojiPicker
+            onEmojiClick={(event) => {
+              handleReaction(event.emoji);
+            }}
+          />
+        </div>
+      )}
+
       {/* Input Area */}
-      <footer className="flex items-center p-4 ">
+      <footer className="flex items-center p-4">
         <input
           type="text"
           value={newMessage}
